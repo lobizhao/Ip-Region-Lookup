@@ -5,9 +5,15 @@
 #include <fstream>
 #include "../external/nlohmann/json.hpp"
 
+/*
+ * Json file reader
+ * nlohmann third package for json type
+ * get ip-prefix(CIDR) and region(support from cloud service) from json
+*/
+
 using json = nlohmann::json;
 
-vector<pair<string, string>> jsonRead(const string& filePath){
+vector<pair<string, string>> JsonReader::jsonRead(const string& filePath){
 
     //input file stream
     ifstream file(filePath);
