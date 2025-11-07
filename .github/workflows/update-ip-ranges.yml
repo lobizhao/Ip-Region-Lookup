@@ -19,17 +19,19 @@ jobs:
         run: |
           curl -O https://ip-ranges.amazonaws.com/ip-ranges.json
           mv ip-ranges.json data/ip-ranges.json
+          curl -O https://www.gstatic.com/ipranges/cloud.json
+          mv cloud.json data/cloud.json
           
       - name: Check for changes
         id: check_changes
         run: |
-          git diff --quiet data/ip-ranges.json || echo "changed=true" >> $GITHUB_OUTPUT
+          git diff --quiet data/ || echo "changed=true" >> $GITHUB_OUTPUT
           
       - name: Commit and push if changed
         if: steps.check_changes.outputs.changed == 'true'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add data/ip-ranges.json
+          git add data/
           git commit -m "chore: update IP ranges data [$(date +'%Y-%m-%d')]"
           git push
