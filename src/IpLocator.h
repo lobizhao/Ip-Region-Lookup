@@ -12,23 +12,31 @@
 
 using namespace std;
 
+struct IpInfo{
+    string region;
+    string service;
+    string provider;
+
+    IpInfo(): region(""), service(""),provider(""){}
+    IpInfo(string r, string s, string p): region(r), service(s), provider(r){}
+};
+struct TrieNode {
+
+    IpInfo info;
+    bool isEnd = false;
+    //binary 0 or 1
+    TrieNode* children[2] = {nullptr, nullptr};
+};
+
 class IpLocator{
 public:
     //constructor function
-    IpLocator(const vector<pair<string, string>>& data);
-
-    string lookUp(const string& ipAddress) const;
+    IpLocator(const vector<pair<string, IpInfo>>& data);
+    IpInfo lookUp(const string& ipAddress) const;
 
 private:
-    struct TrieNode {
-        string region;
-        bool isEnd = false;
-        //binary 0 or 1
-        TrieNode* children[2] = {nullptr, nullptr};
-    };
     TrieNode* root;
-
-    void insertCIDR(const string& cidr, const string& region);
+    void insertCIDR(const string& cidr, const IpInfo& info);
     pair<uint32_t, int> parseCIDR(const string& cidr) const;
     uint32_t ipToBinary(const string& ip) const;
 };

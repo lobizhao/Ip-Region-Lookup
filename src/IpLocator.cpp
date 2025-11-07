@@ -4,22 +4,22 @@
 #include "IpLocator.h"
 #include <sstream>
 
-IpLocator::IpLocator(const vector<pair<string, string>>& data): root(new TrieNode){
+IpLocator::IpLocator(const vector<pair<string, IpInfo>>& data): root(new TrieNode){
     //build trie tree
-    for(const pair<string, string>& entry : data){
+    for(const auto & entry : data){
         insertCIDR(entry.first, entry.second);
     }
 }
 
 //run lookup function
-string IpLocator::lookUp(const string& ipAddress) const{
+IpInfo IpLocator::lookUp(const string& ipAddress) const{
     uint32_t address = ipToBinary(ipAddress);
     TrieNode* current = root;
-    string regionMatch;
+    IpInfo regionMatch;
 
     for(int i=0; i<32; i++){
         if(current->isEnd){
-            regionMatch = current->region;
+            regionMatch = current->info;
         }
         uint32_t bit = (address >> (31-i)) & 1;
         if(current->children[bit] == nullptr){
@@ -28,17 +28,17 @@ string IpLocator::lookUp(const string& ipAddress) const{
         current = current->children[bit];
     }
     if(current->isEnd){
-        regionMatch = current->region;
+        regionMatch = current->info;
     }
     return regionMatch;
 }
 
 //insert CIDR into trie tree
-void IpLocator::insertCIDR(const string& cidr, const string& region){
+void IpLocator::insertCIDR(const string& cidr, const IpInfo& info){
     //get uint32 ip address and prefix length
-    pair<uint32_t, int> info = parseCIDR(cidr);
-    uint32_t address = info.first;
-    int prefixLength = info.second;
+    pair<uint32_t, int> parseInfo = parseCIDR(cidr);
+    uint32_t address = parseInfo.first;
+    int prefixLength = parseInfo.second;
 
     TrieNode* sourceNode = root;
 
@@ -50,7 +50,7 @@ void IpLocator::insertCIDR(const string& cidr, const string& region){
         sourceNode = sourceNode->children[bit];
     }
     sourceNode->isEnd = true;
-    sourceNode->region = region;
+    sourceNode->info = info;
 }
 
 //split CIDR into base ip and prefix length

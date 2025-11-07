@@ -13,26 +13,44 @@
 
 using json = nlohmann::json;
 
-vector<pair<string, string>> JsonReader::jsonRead(const string& filePath){
+vector<pair<string, IpInfo>> JsonReader::loadAWS(const std::string &filePath) {
+    vector<pair<string, IpInfo>> result;
 
-    //input file stream
     ifstream file(filePath);
     if(!file.is_open()){
-        cerr<<"Error, failed to open file" << filePath << endl;
+        cerr << "Error: failed to open file" << filePath << endl;
         return {};
     }
+    json data;
+    file >> data;
 
-    json baseData;
-    //get file contain to baseData
-    file >> baseData;
+    for(auto& prefix: data["prefixes"]){
+        string cidr = prefix["ip-prefix"];
+        IpInfo info;
+        info.region = prefix["region"];
+        info.service = prefix["service"];
+        info.provider = "AWS";
 
-    vector<pair<string, string>> result;
-
-    for(const auto& item: baseData){
-        string cidr = item["ip_prefix"];
-        string region = item["region"];
-
-        result.emplace_back(cidr, region);
+        result.push_back({cidr, info});
     }
     return result;
+}
+
+vector<pair<string, IpInfo>> JsonReader::loadGCP(const std::string &filePath) {
+
+}
+
+vector<pair<string, IpInfo>> JsonReader::loadFromFiles(const vector<string>& files){
+    vector<pair<string, IpInfo>> allData;
+    //input file stream
+    for(const auto& filePath: files){
+        vector<pair<string, IpInfo>> fileData;
+        if(filePath.find("ip-ranges.json") != string::npos){
+            fileData = loadAWS(filePath);
+        }else if(filePath.find("cloud.json") != string::npos){
+            fileData = loadGCP(filePath);
+        }
+        allData.insert(allData.end(), fileData.begin(), fileData.end());
+    }
+    return allData;
 }

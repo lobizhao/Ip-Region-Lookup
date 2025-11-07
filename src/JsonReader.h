@@ -10,12 +10,16 @@
 
 #include <string>
 #include <vector>
+#include "IpLocator.h"
 
 using namespace std;
 
 class JsonReader{
 public:
-    vector<pair<string, string>> jsonRead(const string& filePath);
+    static vector<pair<string, IpInfo>> loadFromFiles(const vector<string>& files);
+private:
+    static vector<pair<string, IpInfo>> loadAWS(const string& filePath);
+    static vector<pair<string, IpInfo>> loadGCP(const string& filePath);
 };
 
 #endif //IP_REGION_LOOKUP_JSONREADER_H
