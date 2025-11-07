@@ -15,12 +15,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Create data directory if not exists
+        run: |
+          mkdir -p data
+          
       - name: Download IP ranges
         run: |
-          curl -O https://ip-ranges.amazonaws.com/ip-ranges.json
-          mv ip-ranges.json data/ip-ranges.json
-          curl -O https://www.gstatic.com/ipranges/cloud.json
-          mv cloud.json data/cloud.json
+          echo "Downloading AWS IP ranges..."
+          curl -f -o data/ip-ranges.json https://ip-ranges.amazonaws.com/ip-ranges.json
+          echo "AWS download complete"
+          
+          echo "Downloading GCP IP ranges..."
+          curl -f -o data/cloud.json https://www.gstatic.com/ipranges/cloud.json
+          echo "GCP download complete"
+          
+          echo "Listing downloaded files:"
+          ls -lh data/
           
       - name: Check for changes
         id: check_changes
