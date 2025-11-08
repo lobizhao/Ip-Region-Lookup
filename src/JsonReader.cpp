@@ -31,12 +31,32 @@ vector<pair<string, IpInfo>> JsonReader::loadAWS(const std::string &filePath) {
         info.service = prefix["service"];
         info.provider = "AWS";
 
-        result.push_back({cidr, info});
+        result.emplace_back(cidr, info);
     }
     return result;
 }
 
 vector<pair<string, IpInfo>> JsonReader::loadGCP(const std::string &filePath) {
+    vector<pair<string, IpInfo>> result;
+
+    ifstream file(filePath);
+    if(!file.is_open()){
+        cerr <<"Error: Failed to open file" << endl;
+        return {};
+    }
+    json data;
+    file >> data;
+
+    for(auto& prefix: data["prefixes"]){
+        string cidr = prefix["ipv4Prefix"];
+        IpInfo info;
+        info.region = prefix["scope"];
+        info.service = prefix["service"];
+        info.provider = "Google Cloud";
+
+        result.emplace_back(cidr, info);
+    }
+    return result;
 
 }
 
