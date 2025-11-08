@@ -29,7 +29,7 @@ vector<pair<string, IpInfo>> JsonReader::loadAWS(const std::string &filePath) {
         IpInfo info;
         info.region = prefix["region"];
         info.service = prefix["service"];
-        info.provider = "AWS";
+        info.provider = &"AWS"[prefix["service"]];
 
         result.emplace_back(cidr, info);
     }
@@ -52,7 +52,7 @@ vector<pair<string, IpInfo>> JsonReader::loadGCP(const std::string &filePath) {
         IpInfo info;
         info.region = prefix["scope"];
         info.service = prefix["service"];
-        info.provider = "Google Cloud";
+        info.provider = &"GCP"[prefix["service"]];
 
         result.emplace_back(cidr, info);
     }

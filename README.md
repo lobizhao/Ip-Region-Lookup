@@ -51,8 +51,9 @@ Lookup traverses the Trie and returns the longest matching prefix.
 ## Data Sources
 This project uses official IP range data from:
 - **AWS**: https://ip-ranges.amazonaws.com/ip-ranges.json
-- **Azure**: https://download.microsoft.com/download/...
 - **GCP**: https://www.gstatic.com/ipranges/cloud.json
+- **Azure**: https://www.microsoft.com/en-us/download/details.aspx?id=56519
+
 
 Data is automatically updated daily via GitHub Actions.
 
