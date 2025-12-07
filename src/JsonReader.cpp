@@ -25,13 +25,15 @@ vector<pair<string, IpInfo>> JsonReader::loadAWS(const std::string &filePath) {
     file >> data;
 
     for(auto& prefix: data["prefixes"]){
-        string cidr = prefix["ip-prefix"];
-        IpInfo info;
-        info.region = prefix["region"];
-        info.service = prefix["service"];
-        info.provider = &"AWS"[prefix["service"]];
+        if(prefix.contains("ip_prefix") && !prefix["ip_prefix"].is_null()){
+            string cidr = prefix["ip_prefix"];
+            IpInfo info;
+            info.region = prefix.contains("region") && !prefix["region"].is_null() ? prefix["region"].get<string>() : "";
+            info.service = prefix.contains("service") && !prefix["service"].is_null() ? prefix["service"].get<string>() : "";
+            info.provider = "AWS";
 
-        result.emplace_back(cidr, info);
+            result.emplace_back(cidr, info);
+        }
     }
     return result;
 }
@@ -48,13 +50,14 @@ vector<pair<string, IpInfo>> JsonReader::loadGCP(const std::string &filePath) {
     file >> data;
 
     for(auto& prefix: data["prefixes"]){
-        string cidr = prefix["ipv4Prefix"];
-        IpInfo info;
-        info.region = prefix["scope"];
-        info.service = prefix["service"];
-        info.provider = &"GCP"[prefix["service"]];
-
-        result.emplace_back(cidr, info);
+        if(prefix.contains("ipv4Prefix") && !prefix["ipv4Prefix"].is_null()){
+            string cidr = prefix["ipv4Prefix"];
+            IpInfo info;
+            info.region = prefix.contains("scope") && !prefix["scope"].is_null() ? prefix["scope"].get<string>() : "";
+            info.service = prefix.contains("service") && !prefix["service"].is_null() ? prefix["service"].get<string>() : "";
+            info.provider = "GCP";
+            result.emplace_back(cidr, info);
+        }
     }
     return result;
 

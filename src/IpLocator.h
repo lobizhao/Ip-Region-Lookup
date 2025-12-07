@@ -18,7 +18,7 @@ struct IpInfo{
     string provider;
 
     IpInfo(): region(""), service(""),provider(""){}
-    IpInfo(string r, string s, string p): region(r), service(s), provider(r){}
+    IpInfo(string r, string s, string p): region(r), service(s), provider(p){}
 };
 struct TrieNode {
 
