@@ -1,6 +1,6 @@
 {
-  "syncToken": "1785186425",
-  "createDate": "2026-07-27-21-07-05",
+  "syncToken": "1785264425",
+  "createDate": "2026-07-28-18-47-05",
   "prefixes": [
     {
       "ip_prefix": "3.4.12.4/32",
@@ -6555,12 +6555,6 @@
       "network_border_group": "us-east-1"
     },
     {
-      "ip_prefix": "99.78.220.96/27",
-      "region": "eu-central-1",
-      "service": "AMAZON",
-      "network_border_group": "eu-central-1"
-    },
-    {
       "ip_prefix": "150.222.44.0/27",
       "region": "eu-west-1",
       "service": "AMAZON",
@@ -12013,6 +12007,12 @@
       "region": "us-east-1",
       "service": "AMAZON",
       "network_border_group": "us-east-1"
+    },
+    {
+      "ip_prefix": "69.107.13.48/29",
+      "region": "eu-west-1",
+      "service": "AMAZON",
+      "network_border_group": "eu-west-1"
     },
     {
       "ip_prefix": "96.0.88.0/22",
@@ -26107,6 +26107,12 @@
       "region": "GLOBAL",
       "service": "AMAZON",
       "network_border_group": "GLOBAL"
+    },
+    {
+      "ip_prefix": "69.107.13.56/29",
+      "region": "eu-west-1",
+      "service": "AMAZON",
+      "network_border_group": "eu-west-1"
     },
     {
       "ip_prefix": "99.78.196.0/22",
@@ -48525,6 +48531,12 @@
       "network_border_group": "ap-northeast-1"
     },
     {
+      "ip_prefix": "16.178.0.0/15",
+      "region": "ap-southeast-2",
+      "service": "EC2",
+      "network_border_group": "ap-southeast-2"
+    },
+    {
       "ip_prefix": "18.97.112.0/20",
       "region": "ap-east-2",
       "service": "EC2",
@@ -68999,6 +69011,12 @@
       "network_border_group": "GLOBAL"
     },
     {
+      "ipv6_prefix": "2606:7b40:1000:6220::/60",
+      "region": "us-east-2",
+      "service": "AMAZON",
+      "network_border_group": "us-east-2"
+    },
+    {
       "ipv6_prefix": "2606:7b40:10ff:d250::/60",
       "region": "us-west-2",
       "service": "AMAZON",
@@ -89031,6 +89049,12 @@
       "region": "af-south-1",
       "service": "EC2",
       "network_border_group": "af-south-1"
+    },
+    {
+      "ipv6_prefix": "2606:7b40:1000:6220::/60",
+      "region": "us-east-2",
+      "service": "EC2",
+      "network_border_group": "us-east-2"
     },
     {
       "ipv6_prefix": "2606:7b40:10ff:d250::/60",
